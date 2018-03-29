@@ -25,3 +25,4 @@ if __name__ == '__main__':
 	conn.close()
 
 	print('%s created' % (filename))
+	dl.write_file(sys.argv[1])
