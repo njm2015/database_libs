@@ -2,6 +2,8 @@ import database_libs as dl
 import pandas as pd
 import sqlite3
 
+from build_all import build_from_symbol
+
 if __name__ == '__main__':
 	
 	sym_list = dl.read_file()
@@ -17,7 +19,15 @@ if __name__ == '__main__':
 		conn = sqlite3.connect(filename)
 		c = conn.cursor()
 
-		le = dl.latest_entry(c)
+		try:
+			le = dl.latest_entry(c)
+		except sqlite3.OperationalError:
+			conn.close()
+			build_from_symbol(sym)
+			conn = sqlite3.connect(filename)
+			c = conn.cursor()
+
+			le = dl.latest_entry(c)
 
 		prev_entries_num = dl.count_entries(c)
 
