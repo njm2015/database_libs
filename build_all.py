@@ -1,6 +1,6 @@
 import database_libs as dl
 import pandas as pd
-import sqlite3
+import MySQLdb
 
 def build_from_symbol(_sym):
 
